@@ -1,0 +1,27 @@
+The setup has different modules for minhash, containment hash, creating the minhash sketches for a big list of viruse genome files.
+
+Requirements:
+1 - The system should have G++ version 7.2 and above with <experimental/filesystem> support.
+
+2 - wget installed on the system
+
+3 - Download all of the data we are using( run these in the command line):
+	dataDir="../data"
+
+	wget -nd http://files.cgrb.oregonstate.edu/Koslicki_Lab/MinHashContainment/4539585.3.sorted.r1.fastq.tar.gz -P ${dataDir}/SNAP/
+
+	wget -nd http://files.cgrb.oregonstate.edu/Koslicki_Lab/MinHashContainment/4539585.3.sorted.r2.fastq.tar.gz -P ${dataDir}/SNAP/
+
+	wget -nd http://files.cgrb.oregonstate.edu/Koslicki_Lab/MinHashContainment/ViralGenomes.tar.gz -P ${dataDir}
+
+	wget -nd http://files.cgrb.oregonstate.edu/Koslicki_Lab/MinHashContainment/Genomes.tar.gz -P ${dataDir}
+
+
+instructions:
+1 - make command will create the executables for minhash.cpp and containmentminhash.cpp
+
+2 - make calls basicworkflow.cpp which creates minhashes and containment hashes for a set of test kmers given to them in the basicWokrflow.cpp and gives the minhash and containment indexes and relative errors along with true jaccard.
+
+3 - make calls createVirusesMinhashSketches.cpp which creates minhashes for a large set of data that we have downloaded above. This step was taking 40+ minutes in python, which now takes around 8 minutes.
+
+4 - The mapper.c takes a sample string and calcutes its similarity with the database of minhashes we have precomputed for the virus genomes and gives the minhash and containment hash indexes and similarities.
